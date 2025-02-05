@@ -1,0 +1,24 @@
+{
+  "name": "codeminer42-lyt.bi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artur-seppa/CodeMiner42-Lyt.bi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artur-seppa/CodeMiner42-Lyt.bi/issues"
+  },
+  "homepage": "https://github.com/artur-seppa/CodeMiner42-Lyt.bi#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
