@@ -1,15 +1,14 @@
 const http = require('http');
+const { createShortUrl } = require('./handlers/createShortUrl.js');
 
-const list_url = {};
+const urlDatabase = {};
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
     const { method, url } = req;
 
     if (method === 'POST') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'POST' }));
-        return;
+        return createShortUrl(req, res, urlDatabase);
     }
 
     if (method === 'GET') {
