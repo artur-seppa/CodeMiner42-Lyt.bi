@@ -1,4 +1,3 @@
-// service/createShortUrl.js
 const { encodeBase62 } = require('../utils/base62');
 const { isValidUrl } = require('../utils/isValidUrl');
 

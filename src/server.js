@@ -1,4 +1,5 @@
 const http = require('http');
+const { parse } = require('url');
 const { UrlController } = require('./controller/urlController');
 
 const PORT = process.env.PORT || 3000;
@@ -13,9 +14,14 @@ const server = http.createServer((req, res) => {
     }
 
     if (method === 'GET') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'GET' }));
-        return;
+        const queryParams = parse(req.url, true).query;
+        const shortCode = queryParams.code;
+
+        return urlController.handleRedirect(req, res, shortCode);
+
+        // res.writeHead(200, { 'Content-Type': 'application/json' });
+        // res.end(JSON.stringify({ message: 'GET' }));
+        // return;
     }
 
     res.writeHead(404, { 'Content-Type': 'application/json' });

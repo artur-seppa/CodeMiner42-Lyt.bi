@@ -1,4 +1,5 @@
 const { createShortUrl } = require('../service/createShortUrl');
+const { redirectToOriginalUrl } = require('../service/redirectToOriginalUrl');
 
 class UrlController {
     constructor(urlDatabase) {
@@ -33,6 +34,26 @@ class UrlController {
                 res.end(JSON.stringify({ error: error.message }));
             }
         });
+    }
+
+    handleRedirect(req, res, shortCode) {
+        try {
+            const response = redirectToOriginalUrl(shortCode, this.urlDatabase);
+
+            if (response.status === 'error') {
+                res.writeHead(404, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: response.message }));
+            } else {
+                res.writeHead(301, {
+                    'Location': response.redirect
+                });
+                res.end();
+            }
+
+        } catch (error) {
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Internal Server Error' }));
+        }
     }
 
 }
