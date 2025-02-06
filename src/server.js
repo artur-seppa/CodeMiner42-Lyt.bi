@@ -13,15 +13,19 @@ const server = http.createServer((req, res) => {
         return urlController.handleCreateShortUrl(req, res);
     }
 
+    const urlParams = req.url.split('/').filter(part => part !== '')
+    const [shortCode, endpoint] = urlParams;
+
     if (method === 'GET') {
-        const queryParams = parse(req.url, true).query;
-        const shortCode = queryParams.code;
+        switch (endpoint) {
+            case 'visits':
+                return urlController.handleRedirectToVisitsCounter(req, res, shortCode);
+                break;
 
-        return urlController.handleRedirect(req, res, shortCode);
-
-        // res.writeHead(200, { 'Content-Type': 'application/json' });
-        // res.end(JSON.stringify({ message: 'GET' }));
-        // return;
+            case undefined:
+                return urlController.handleRedirect(req, res, shortCode);
+                break;
+        }
     }
 
     res.writeHead(404, { 'Content-Type': 'application/json' });

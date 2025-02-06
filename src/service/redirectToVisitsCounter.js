@@ -1,4 +1,4 @@
-function redirectToOriginalUrl(shortCode, urlDatabase) {
+function redirectToVisitsCounter(shortCode, urlDatabase) {
     try {
         const urlEntry = urlDatabase[shortCode];
 
@@ -8,11 +8,9 @@ function redirectToOriginalUrl(shortCode, urlDatabase) {
                 message: 'Short URL not found'
             };
         } else {
-            urlEntry.visits++;
-
             return {
                 status: 'success',
-                redirect: urlEntry.originalUrl
+                visits: urlEntry.visits
             };
         }
     } catch (error) {
@@ -20,4 +18,4 @@ function redirectToOriginalUrl(shortCode, urlDatabase) {
     }
 }
 
-module.exports = { redirectToOriginalUrl };
+module.exports = { redirectToVisitsCounter };
