@@ -1,14 +1,15 @@
 const http = require('http');
-const { createShortUrl } = require('./handlers/createShortUrl.js');
+const { UrlController } = require('./controller/urlController');
 
-const urlDatabase = {};
 const PORT = process.env.PORT || 3000;
+const urlDatabase = {};
+const urlController = new UrlController(urlDatabase);
 
 const server = http.createServer((req, res) => {
     const { method, url } = req;
 
     if (method === 'POST') {
-        return createShortUrl(req, res, urlDatabase);
+        return urlController.handleCreateShortUrl(req, res);
     }
 
     if (method === 'GET') {
@@ -21,6 +22,16 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ error: 'Not Found' }));
 });
 
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhosts:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    server.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+    });
+}
+
+module.exports = { server, urlDatabase };
+
+//     server.listen(PORT, () => {
+//         console.log(`Server running at http://localhosts:${PORT}`);
+//     });
+
+// module.exports = { server };
