@@ -12,26 +12,27 @@ const server = http.createServer((req, res) => {
         return urlController.handleCreateShortUrl(req, res);
     }
 
-    if (method === 'GET') {
-        const shortCode = req.url.split('/')[1] || '';
+    const urlParams = req.url.split('/').filter(part => part !== '')
+    const [shortCode, endpoint] = urlParams;
 
-        return urlController.handleRedirect(req, res, shortCode);
+    if (method === 'GET') {
+        switch (endpoint) {
+            case 'visits':
+                return urlController.handleRedirectToVisitsCounter(req, res, shortCode);
+                break;
+
+            case undefined:
+                return urlController.handleRedirect(req, res, shortCode);
+                break;
+        }
     }
 
     res.writeHead(404, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'Not Found' }));
 });
 
-if (process.env.NODE_ENV !== 'test') {
-    server.listen(PORT, () => {
-        console.log(`Server running at http://localhost:${PORT}`);
-    });
-}
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
 
 module.exports = { server, urlDatabase };
-
-//     server.listen(PORT, () => {
-//         console.log(`Server running at http://localhosts:${PORT}`);
-//     });
-
-// module.exports = { server };
