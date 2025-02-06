@@ -24,6 +24,7 @@ const server = http.createServer((req, res) => {
             case undefined:
                 return urlController.handleRedirect(req, res, shortCode);
                 break;
+        }
     }
 
     res.writeHead(404, { 'Content-Type': 'application/json' });
