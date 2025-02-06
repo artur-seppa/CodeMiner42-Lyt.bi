@@ -1,8 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-
 import { createShortUrl } from '../src/service/createShortUrl';
-import { encodeBase62, decodeBase62 } from'../src/utils/base62';
-import { isValidUrl } from'../src/utils/isValidUrl';
 
 describe('createShortUrl', () => {
     let urlDatabase;
