@@ -13,9 +13,9 @@ const server = http.createServer((req, res) => {
     }
 
     if (method === 'GET') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'GET' }));
-        return;
+        const shortCode = req.url.split('/')[1] || '';
+
+        return urlController.handleRedirect(req, res, shortCode);
     }
 
     res.writeHead(404, { 'Content-Type': 'application/json' });
