@@ -22,16 +22,8 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify({ error: 'Not Found' }));
 });
 
-if (process.env.NODE_ENV !== 'test') {
-    server.listen(PORT, () => {
-        console.log(`Server running at http://localhost:${PORT}`);
-    });
-}
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhosts:${PORT}`);
+});
 
 module.exports = { server, urlDatabase };
-
-//     server.listen(PORT, () => {
-//         console.log(`Server running at http://localhosts:${PORT}`);
-//     });
-
-// module.exports = { server };
