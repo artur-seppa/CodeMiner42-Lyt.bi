@@ -1,15 +1,15 @@
 const http = require('http');
+const { UrlController } = require('./controller/urlController');
 
-const list_url = {};
 const PORT = process.env.PORT || 3000;
+const urlDatabase = {};
+const urlController = new UrlController(urlDatabase);
 
 const server = http.createServer((req, res) => {
     const { method, url } = req;
 
     if (method === 'POST') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'POST' }));
-        return;
+        return urlController.handleCreateShortUrl(req, res);
     }
 
     if (method === 'GET') {
@@ -25,3 +25,5 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
     console.log(`Server running at http://localhosts:${PORT}`);
 });
+
+module.exports = { server, urlDatabase };
